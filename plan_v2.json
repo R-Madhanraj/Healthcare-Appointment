@@ -1,0 +1,218 @@
+[
+  {
+    "step": "Read and analyze pom.xml for backend dependencies and project setup.",
+    "sub_steps": [
+      "Open /home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/pom.xml.",
+      "Identify all dependencies included (Spring Boot starter modules, Lombok, JPA, MySQL, validation, etc.).",
+      "Note the Java version and other relevant configuration parameters to ensure alignment with implementation."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/pom.xml"
+    ],
+    "description": "Understanding the project's dependencies ensures appropriate imports and code structure for all further Spring Boot work."
+  },
+  {
+    "step": "Implement backend entities, repositories, and enums for Patient, Doctor, Appointment and Status.",
+    "sub_steps": [
+      "Create Patient, Doctor, Appointment entity classes under /springapp/src/main/java/com/examly/springapp/model/.",
+      "Define fields with correct types, validation annotations (not-null, size, email, future/past restrictions as per schema).",
+      "Properly annotate relationships (e.g., @ManyToOne for Appointment's references).",
+      "Create an enum AppointmentStatus (REQUESTED, APPROVED, REJECTED, COMPLETED) for status.",
+      "Create CRUD repositories for each (PatientRepository, DoctorRepository, AppointmentRepository) in /springapp/src/main/java/com/examly/springapp/repository/."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/model/Patient.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/model/Doctor.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/model/Appointment.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/model/AppointmentStatus.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/repository/PatientRepository.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/repository/DoctorRepository.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/repository/AppointmentRepository.java"
+    ],
+    "files_to_edit": [],
+    "description": "These files establish the data schema and allow Spring Data JPA to perform persistence. Validation constraints and proper entity relationships are crucial for correct operation and to align API input expectations with validation."
+  },
+  {
+    "step": "Implement backend service layer for business logic and validation.",
+    "sub_steps": [
+      "Create service classes: PatientService, DoctorService, AppointmentService in /springapp/src/main/java/com/examly/springapp/service/.",
+      "Inject the corresponding repositories using @Autowired or constructor injection.",
+      "For AppointmentService, add logic to check doctor availability (no overlaps), set initial status to REQUESTED, handle create/update/find operations and error handling.",
+      "Throw appropriate exceptions for not found, validation, and conflict cases."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/service/PatientService.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/service/DoctorService.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/service/AppointmentService.java"
+    ],
+    "files_to_edit": [],
+    "description": "Service classes encapsulate business logic, keep controllers simple, and make it easy to test business rules. AppointmentService enforces conflict checking and handles core appointment logic, enabling test cases pertaining to appointments to be properly handled."
+  },
+  {
+    "step": "Implement backend controllers with full API endpoints.",
+    "sub_steps": [
+      "Create PatientController, DoctorController, and AppointmentController in /springapp/src/main/java/com/examly/springapp/controller/.",
+      "Expose endpoints according to requirements: POST/GET for patients/doctors, POST/GET/PATCH for appointments.",
+      "Map request/response bodies properly using @RequestBody, @PathVariable, etc.",
+      "Return proper HTTP statuses (201, 200, 400, 404, 409) and error messages.",
+      "Use @Validated on REST controllers for automatic validation and error responses."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/controller/PatientController.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/controller/DoctorController.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/controller/AppointmentController.java"
+    ],
+    "files_to_edit": [],
+    "description": "REST controllers provide the API contract for frontend integration and allow test cases dealing with API POST, GET, PATCH endpoints to run correctly. Explicit status codes and consistent error structures are important for both testing and frontend expectations."
+  },
+  {
+    "step": "Implement backend error handling and CORS configuration.",
+    "sub_steps": [
+      "Add global exception handler (@ControllerAdvice) to standardize error response structure and HTTP codes.",
+      "Return proper validation error messages for 400s and not-found errors for 404.",
+      "Configure CORS via a config class to allow requests from frontend (http://localhost:3000)."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/exception/GlobalExceptionHandler.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/main/java/com/examly/springapp/config/CorsConfig.java"
+    ],
+    "files_to_edit": [],
+    "description": "Centralized error handling ensures that all responses comply with the structure expected in test cases and makes error states clear for the frontend. CORS config is required for React app API calls."
+  },
+  {
+    "step": "Implement all backend JUnit test cases as described in Test Cases JSON.",
+    "sub_steps": [
+      "For each test case (testCreatePatient, testCreatePatientValidation, testBookAppointment, testUpdateAppointmentStatus, testGetAppointmentsByPatient):",
+      "Create or edit corresponding test files in /springapp/src/test/java/com/examly/springapp/",
+      "Test positive and negative scenarios using MockMvc for API endpoints or service-level testing with mocks.",
+      "Mock repositories/services appropriately.",
+      "Ensure tests match names and behaviors outlined in Test Cases JSON.",
+      "NO manual cleanup() calls; ensure isolation between tests."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/test/java/com/examly/springapp/controller/PatientControllerTest.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/test/java/com/examly/springapp/controller/DoctorControllerTest.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/test/java/com/examly/springapp/controller/AppointmentControllerTest.java"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/springapp/src/test/java/com/examly/springapp/HealthcareAppointmentManagementSystemApplicationTests.java"
+    ],
+    "description": "Test implementation strictly covers all test cases in Test Cases JSON, mapping each to JUnit test methods with correct setup, mocks, and assertions."
+  },
+  {
+    "step": "Compile and run backend (Spring Boot) tests.",
+    "sub_steps": [
+      "Run 'mvn clean compile -q -Dspring.main.banner-mode=off' to verify compilation.",
+      "Run 'mvn test -q -Dspring.main.banner-mode=off' to execute all backend JUnit tests.",
+      "Run 'mvn clean install -q -Dspring.main.banner-mode=off' for final build."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Ensures the backend code and test cases compile and function properly before moving to frontend. Backend must be stable and passing tests for API contract integrity."
+  },
+  {
+    "step": "Read and analyze package.json for frontend React dependencies and structure.",
+    "sub_steps": [
+      "Open /home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/package.json.",
+      "Note all core dependencies (React, react-dom, testing-library, etc.).",
+      "Check script commands for test:ci and build.",
+      "Review file structure present in src/ for App.js, index.js, and CSS files."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/package.json"
+    ],
+    "description": "Ensures new components and services will integrate cleanly and that styling/test/lint scripts are available."
+  },
+  {
+    "step": "Implement frontend React service functions for API integration.",
+    "sub_steps": [
+      "Add an api.js file under /reactapp/src/utils/ to implement fetchPatients, fetchDoctors, createAppointment, fetchAppointmentsByPatient, updateAppointmentStatus.",
+      "Use fetch() with baseURL http://localhost:8080 and proper HTTP methods/content-types.",
+      "Handle error and success status codes as returned by backend."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/utils/api.js"
+    ],
+    "files_to_edit": [],
+    "description": "Provides a shared API utility layer for all API calls, ensuring maintainability and enabling easier mocking within tests."
+  },
+  {
+    "step": "Implement AppointmentForm component with styling and validation.",
+    "sub_steps": [
+      "Create AppointmentForm.js under /reactapp/src/components/ with all specified form controls (dropdowns, pickers, textarea).",
+      "Fetch patient and doctor lists via API service functions in useEffect.",
+      "Implement form state and validation (required fields, future date, reason length).",
+      "Display error messages inline per test case requirements.",
+      "Show success message upon successful API response, reset form, and handle validation failures.",
+      "Create matching CSS module or scoped styles using variables as per design guidelines."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentForm.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentForm.css"
+    ],
+    "files_to_edit": [],
+    "description": "Handles creation of new appointments with strong UX, field-level validation, error, and success feedback as required."
+  },
+  {
+    "step": "Implement AppointmentList component with filtering, status actions, and color-coding.",
+    "sub_steps": [
+      "Create AppointmentList.js under /reactapp/src/components/ displaying appointments in a table layout.",
+      "Include filter dropdown for status, color-code status cells per requirements.",
+      "Integrate Approve/Reject actions for REQUESTED status, calling updateAppointmentStatus on backend and updating UI accordingly.",
+      "Show loading/error/empty states as appropriate.",
+      "Style as per UI guidelines (centered, container, table styles, color system, responsive design if needed)."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentList.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentList.css"
+    ],
+    "files_to_edit": [],
+    "description": "Displays all appointments in tabular form, supports status filtering and status management, and adheres to visual guidelines. Provides the action flow the test cases expect."
+  },
+  {
+    "step": "Update App.js and App.css to integrate navigation, state, and both components according to requirements.",
+    "sub_steps": [
+      "Implement top-level navigation (tabs or buttons) for Book Appointment/Appointment List.",
+      "Manage active tab/state and pass necessary props to AppointmentForm and AppointmentList.",
+      "Handle global error/success feedback and shared API usage.",
+      "Apply overall styling (CSS variables, layout, responsive as per design)."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/App.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/App.css"
+    ],
+    "description": "This step brings all UI components together, enables simple navigation, and ensures unified styling and state management as required by both question and tests."
+  },
+  {
+    "step": "Implement all required frontend Jest/RTL test cases as described in Test Cases JSON.",
+    "sub_steps": [
+      "For each test case (testAppointmentFormRendering, testAppointmentFormValidation, testAppointmentFormSubmission, testAppointmentListRendering, testAppointmentStatusUpdate):",
+      "Create or edit corresponding test files in /reactapp/src/components/ (e.g., AppointmentForm.test.js, AppointmentList.test.js).",
+      "Use React Testing Library's render/screen/fireEvent as appropriate.",
+      "Mock API service functions using jest.spyOn, jest.fn().",
+      "Assert on presence of fields, messages, required flows, colors, and button actions.",
+      "No manual cleanup() calls (automatic by RTL)."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentList.test.js"
+    ],
+    "files_to_edit": [],
+    "description": "Implements all tests exactly as described, ensuring those required interactions, validation, and behaviors are present and functioning. Each file contains tests mapped to their respective component's requirements."
+  },
+  {
+    "step": "Build, lint, and run test suite for frontend React app.",
+    "sub_steps": [
+      "Run 'npm install' in /reactapp to ensure dependencies are installed.",
+      "Run 'npm run build' to verify project compiles cleanly.",
+      "Run 'npx eslint src/ --fix' to auto-fix/lint source code.",
+      "Run 'npm run test:ci' to execute all Jest tests non-blockingly."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Verifies that all code compiles, is properly styled/linted, and that all required test cases are passing for the React/Jest portion before submission."
+  }
+]

@@ -1,0 +1,31 @@
+[
+  {
+    "step": "Diagnose AppointmentList.test.js test failures and ensure robust selector usage and correct data rendering.",
+    "sub_steps": [
+      "Open /home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentList.test.js.",
+      "Carefully check that the test data for appointments includes a reason string that exactly matches what the AppointmentList component renders (e.g., 'check blood pressure').",
+      "Ensure the AppointmentList component correctly displays the 'reason' field (without trimming, capitalization changes, or truncation).",
+      "In the test, replace any queries like getByTestId or getByText with robust RTL queries: use within() on table rows or use getAllByText to find all cells containing the expected reason text and then assert the correct one by appointment ID or unique table row context.",
+      "If tests are still failing to find the correct text, add debug() statements to output the rendered DOM and inspect what text is being displayed, then update the test to search for the exact text shown.",
+      "Ensure that table cells have clear and reliable testIDs or unique text content. If needed, add data-testid attributes to the AppointmentList rendering for 'reason' cells, matching the structure expected by the tests, or update tests to match component data-testid naming."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentList.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentList.js"
+    ],
+    "description": "This step resolves the React Testing Library failure to find table cell text (such as 'check blood pressure') by ensuring both test data and selectors are precise/tolerant, and that component output and test assertions align, including potentially adding missing data-testid attributes or using correct queries."
+  },
+  {
+    "step": "Build, lint, and run test suite for frontend React app.",
+    "sub_steps": [
+      "Run 'npm install' in /reactapp to ensure dependencies are installed.",
+      "Run 'npm run build' to verify project compiles cleanly.",
+      "Run 'npx eslint src/ --fix' to auto-fix/lint source code.",
+      "Run 'npm run test:ci' to execute all Jest tests non-blockingly."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Verifies that all code compiles, is properly styled/linted, and that all required test cases are passing for the React/Jest portion before submission."
+  }
+]

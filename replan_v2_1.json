@@ -1,0 +1,30 @@
+[
+  {
+    "step": "FIX AppointmentList.test.js to use robust queries for cell content",
+    "sub_steps": [
+      "Open /home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentList.test.js.",
+      "Identify all assertions/selectors using getByTestId('reason-cell-11') or similar brittle patterns for the appointment reason cell.",
+      "Replace these with more robust queries: use screen.getByText with the expected reason string instead, or combine queries such as screen.getAllByTestId('reason-cell').",
+      "Verify that the tests uniquely locate and assert on the appropriate table cell or element, using either the text content or by narrowing the scope (for example, within a particular row).",
+      "If using getAllByTestId, iterate through them and match the cell with the expected appointment reason per test case.",
+      "Rerun the test file (or relevant command) after edits to confirm resolution of 'not found' and ambiguity errors."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/bf93bb56-478d-4052-9bd4-54978cc43c8b/reactapp/src/components/AppointmentList.test.js"
+    ],
+    "description": "This step resolves the React Testing Library test selector issue by making cell content assertions robust against DOM shape changes, enabling tests to find cells reliably and consistently."
+  },
+  {
+    "step": "Build, lint, and run test suite for frontend React app.",
+    "sub_steps": [
+      "Run 'npm install' in /reactapp to ensure dependencies are installed.",
+      "Run 'npm run build' to verify project compiles cleanly.",
+      "Run 'npx eslint src/ --fix' to auto-fix/lint source code.",
+      "Run 'npm run test:ci' to execute all Jest tests non-blockingly."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Verifies that all code compiles, is properly styled/linted, and that all required test cases are passing for the React/Jest portion before submission."
+  }
+]
