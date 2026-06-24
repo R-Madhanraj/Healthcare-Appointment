@@ -54,7 +54,7 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    // ✅ THIS WAS MISSING: Handles GET /api/patients
+    
     @GetMapping
     public ResponseEntity<List<Patient>> getAllPatients() {
         return ResponseEntity.ok(patientService.all());
